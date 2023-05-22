@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Coffee Order</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+    }
+
+    h1 {
+      color: #333;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    select, input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    h2 {
+      margin-top: 20px;
+      font-size: 20px;
+    }
+
+    .order-summary {
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #f2f2f2;
+      border-radius: 5px;
+    }
+
+    .order-summary p {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Coffee Order</h1>
+
+    <label for="drinkType">Drink Type:</label>
+    <select id="drinkType">
+      <option value="hot">Hot</option>
+      <option value="cold">Cold</option>
+      <option value="blended">Blended</option>
+    </select>
+
+    <label for="size">Size:</label>
+    <select id="size">
+      <option value="S">$2 - Small</option>
+      <option value="M">$2.5 - Medium (+$0.5)</option>
+      <option value="L">$3 - Large (+$1)</option>
+      <option value="XL">$3.5 - Extra Large (+$1.5)</option>
+    </select>
+
+    <label for="whippedCream">Whipped Cream Topping:</label>
+    <select id="whippedCream">
+      <option value="yes">Yes (+$0.50)</option>
+      <option value="no">No</option>
+    </select>
+
+    <label for="availabilityLSize">Availability of L Size:</label>
+    <select id="availabilityLSize">
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+    </select>
+
+    <label for="milkOption">Milk Option:</label>
+    <select id="milkOption">
+      <option value="wholeMilk">Whole Milk (+$2.25)</option>
+      <option value="almondMilk">Almond Milk (+$2.75)</option>
+    </select>
+
+    <label for="chocolateSaucePumps">Chocolate Sauce Pumps:</label>
+    <input type="number" id="chocolateSaucePumps" min="0" max="6">
+
+    <label for="quantity">Quantity:</label>
+    <input type="number" id="quantity">
+
+    <label for="breakfast">Breakfast:</label>
+    <select id="breakfast">
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+    </select>
+
+    <label for="breakfastType">Breakfast Type:</label>
+    <select id="breakfastType">
+      <option value="sandwiches">Sandwiches</option>
+      <option value="bagels">Bagels</option>
+    </select>
+
+    <label for="sandwichOption">Sandwich Option:</label>
+    <select id="sandwichOption">
+      <option value="none">None</option>
+      <option value="egg">Egg (+$1)</option>
+      <option value="turkey">Turkey (+$1)</option>
+    </select>
+
+    <label for="bagelOption">Bagel Option:</label>
+    <select id="bagelOption">
+      <option value="none">None</option>
+      <option value="butter">Butter (+$0.50)</option>
+      <option value="creamCheese">Cream Cheese (+$0.50)</option>
+    </select>
+
+    <button onclick="calculatePrice()">Calculate Price</button>
+
+    <div class="order-summary">
+      <h2>Order Summary</h2>
+      <div id="orderSummary"></div>
+    </div>
+  </div>
+
+  <script>
+    function calculatePrice() {
+      var drinkType = document.getElementById("drinkType").value;
+      var size = document.getElementById("size").value;
+      var whippedCream = document.getElementById("whippedCream").value;
+      var availabilityLSize = document.getElementById("availabilityLSize").value;
+      var milkOption = document.getElementById("milkOption").value;
+      var chocolateSaucePumps = parseInt(document.getElementById("chocolateSaucePumps").value);
+      var quantity = parseInt(document.getElementById("quantity").value);
+      var breakfast = document.getElementById("breakfast").value;
+      var breakfastType = document.getElementById("breakfastType").value;
+      var sandwichOption = document.getElementById("sandwichOption").value;
+      var bagelOption = document.getElementById("bagelOption").value;
+
+      var basePrice = 0;
+      var totalPrice = 0;
+
+      // Calculate coffee price
+      if (drinkType !== "") {
+        basePrice += 2;
+        if (size === "M") {
+          basePrice += 0.5;
+        } else if (size === "L") {
+          basePrice += 1;
+        } else if (size === "XL") {
+          basePrice += 1.5;
+        }
+
+        if (whippedCream === "yes") {
+          basePrice += 0.5;
+        }
+
+        if (availabilityLSize === "yes" && (drinkType === "cold" || drinkType === "blended")) {
+          basePrice += 1;
+        } else if (availabilityLSize === "no") {
+          basePrice == 0;
+
+        }
+
+        if (milkOption === "wholeMilk") {
+          basePrice += 2.25;
+        } else if (milkOption === "almondMilk") {
+          basePrice += 2.75;
+        }
+
+        if (chocolateSaucePumps > 2) {
+          basePrice += (chocolateSaucePumps - 2) * 0.5;
+        }
+
+        totalPrice += basePrice * quantity;
+      }
+
+      // Calculate breakfast price
+      if (breakfast === "yes") {
+        var breakfastPrice = 3;
+
+        if (breakfastType === "sandwiches" && sandwichOption !== "none") {
+          breakfastPrice += 1;
+        } else if (breakfastType === "bagels" && bagelOption !== "none") {
+          breakfastPrice += 0.5;
+        }
+
+        totalPrice += breakfastPrice * quantity;
+      } else if (breakfast === "no") {
+        breakfastPrice = 0;
+      }
+      // Calculate tax
+      var tax = totalPrice * 0.0725;
+      totalPrice += tax;
+
+      // Display order summary
+      var orderSummary = document.getElementById("orderSummary");
+      orderSummary.innerHTML = `
+        <p>Drink Type: ${drinkType}</p>
+        <p>Size: ${size}</p>
+        <p>Whipped Cream: ${whippedCream}</p>
+        <p>Availability of L Size: ${availabilityLSize}</p>
+        <p>Milk Option: ${milkOption}</p>
+        <p>Chocolate Sauce Pumps: ${chocolateSaucePumps}</p>
+        <p>Quantity: ${quantity}</p>
+        <p>Breakfast: ${breakfast}</p>
+        <p>Breakfast Type: ${breakfastType}</p>
+        <p>Sandwich Option: ${sandwichOption}</p>
+        <p>Bagel Option: ${bagelOption}</p>
+        <h3>Total Price + Tax (${tax}) = ${totalPrice.toFixed(2)}</h3>
+      `;
+    }
+  </script>
+</body>
+</html>
