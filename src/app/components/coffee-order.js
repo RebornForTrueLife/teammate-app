@@ -13,6 +13,9 @@ export default function CoffeeOrder() {
 	const [size, setSize] = useState("m");
 	const [whippedCreamTopping, setWhippedCreamTopping] = useState("yes");
 	const [chocolatePump,setChocolatePump] = useState("5");
+
+	const price = calculatePrice(type, size, whippedCreamTopping, chocolatePump);
+
 	return (
 		<>
 			<title>Coffee Order</title>
@@ -37,11 +40,8 @@ export default function CoffeeOrder() {
 				{/* Chocolate pump */}
 				<ChocolatePumpOption chocolatePump={chocolatePump} onChocolatePumpChange={setChocolatePump} />
 				
-				{/* Calculate price */}
-				<button onclick="calculatePrice()">{`Calculate Price: ${type}`}</button>
-				
 				{/* Receipt of order */}
-
+				<OrderSummary price={price} />
 			</div>
 		</>
 	);
@@ -108,13 +108,54 @@ function ChocolatePumpOption({ chocolatePump, onChocolatePumpChange }) {
 }	// close ChocolatePumpOption
 
 
-function OrderSummary() {
+function OrderSummary({ price }) {
 	return (
 		<>
 			<div className="order-summary">
 				<h2>Order Summary</h2>
-				<div id="orderSummary" />
+				{`Total price ${price}`}
 			</div>
 		</>
 	);
 }	// close OrderSummary
+
+
+/* Calcualte price */
+function calculatePrice( type, size, whippedCreamTopping, chocolatePump ) {
+	const COFFEE = data.drink.coffee;		// data of coffee
+	const coffee = {};						// data for current coffee order
+	coffee["type"] = {[type]: true};
+	coffee["size"] = {[size]: true};
+	coffee["whippedCreamTopping"] = {[whippedCreamTopping]: true};
+	coffee["chocolatePump"] = {[chocolatePump]: true};
+	// validate coffee information
+	const constraints = COFFEE.constraint;
+	var validate = true;
+	constraints.forEach(constraint => {
+		var operand1;
+		if (constraint[0] === 1)
+			operand1 = coffee[constraint[1]][constraint[2]];
+		else
+			operand1 = !coffee[constraint[1]][constraint[2]];
+		var operand2 = constraint[3] === 1? coffee[constraint[4]][constraint[5]] : !coffee[constraint[4]][constraint[5]];
+		var expression = operand1 && operand2;
+		if (expression === true)
+			validate = `${expression}: ${type} ${size} ${whippedCreamTopping} ${chocolatePump}`;
+	});
+	if (validate !== true)		// if the information is invalid
+		return null;
+
+	// calculate price
+	let additionalPrice = 0;
+	Object.keys(coffee).forEach((attri) => {
+		Object.keys(COFFEE[attri]).forEach((attriValue) => {
+			if (coffee[attri][attriValue])
+				additionalPrice += COFFEE[attri][attriValue];
+		});
+	});
+
+	const price = COFFEE["basePrice"] + additionalPrice;
+	return price;
+}	// close calculatePrice
+
+

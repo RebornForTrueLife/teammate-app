@@ -28,9 +28,9 @@
 				"6": 2
 			},
 			"constraint": [
-				[1, "type.hot", 1, "size.l"],
-				[1, "type.hot", 1, "size.xl"],
-				[-1, "type.hot", 1, "chocolatePump"]
+				[1, "type", "hot", 1, "size", "l"],
+				[1, "type", "hot", 1, "size", "xl"],
+				[-1, "type", "hot", -1, "chocolatePump", "0"]
 			]
 		},
 		"milkTea": {
@@ -65,9 +65,9 @@
 				"almondMilk": 0.5
 			},
 			"constraint": [
-				[1, "type.hot", 1, "size.l"],
-				[1, "type.hot", 1, "size.xl"],
-				[-1, "type.hot", 1, "chocolatePump"]
+				[1, "type", "hot", 1, "size", "l"],
+				[1, "type", "hot", 1, "size", "xl"],
+				[-1, "type", "hot", -1, "chocolatePump", "0"]
 			]
 		}
 	},
