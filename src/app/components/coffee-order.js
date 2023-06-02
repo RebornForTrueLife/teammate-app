@@ -5,13 +5,22 @@
 "use client"			// in order to use the state
 
 import { useState } from 'react';
+import { TypeOption, SizeOption, CreamOption, ChocolatePumpOption } from './drink-order';
 import data from '../../../data/item-data.json';
 
 
+/*
+	Each coffee order information has 4 attributes: 
+		1. type
+		2. size
+		3. whippedCreamTopping
+		4. chocolatePump
+	This Components allow to input the attributes and calculate the price based on the input.
+ */
 export default function CoffeeOrder() {
 	const [type, setType] = useState("cold");
 	const [size, setSize] = useState("m");
-	const [whippedCreamTopping, setWhippedCreamTopping] = useState("yes");
+	const [whippedCreamTopping, setWhippedCreamTopping] = useState(true);
 	const [chocolatePump,setChocolatePump] = useState("5");
 
 	const price = calculatePrice(type, size, whippedCreamTopping, chocolatePump);
@@ -48,66 +57,9 @@ export default function CoffeeOrder() {
 }	// close CoffeeOrder
 
 
-function TypeOption({ type, onTypeChange }) {
-	return (
-		<>
-			<label htmlFor="type">Drink Type:</label>
-			<select id="type" value={type} onChange={(event) => onTypeChange(event.target.value)}>
-				<option value="hot">Hot</option>
-				<option value="cold">Cold</option>
-				<option value="blended">Blended</option>
-			</select>
-		</>
-	);
-}	// close TypeOption
-
-
-function SizeOption({ size, onSizeChange }) {
-	return (
-		<>
-			<label htmlFor="size">Size:</label>
-			<select id="size" value={size} onChange={(e) => onSizeChange(e.target.value)}>
-				<option value="s">$2 - Small</option>
-				<option value="m">$2.5 - Medium (+$0.5)</option>
-				<option value="l">$3 - Large (+$1)</option>
-				<option value="xl">$3.5 - Extra Large (+$1.5)</option>
-			</select>
-		</>
-	);
-}	// close SizeOption
-
-
-function CreamOption({ whippedCreamTopping, onWhippedCreamToppingChange }) {
-	return (
-		<>
-			<label htmlFor="whippedCream">Whipped Cream Topping:</label>
-			<select id="whippedCream" value={whippedCreamTopping} onChange={(e) => onWhippedCreamToppingChange(e.target.value) }>
-				<option value="yes">Yes (+$0.50)</option>
-				<option value="no">No</option>
-			</select>
-		</>
-	);
-}	// close CreamOption
-
-
-function ChocolatePumpOption({ chocolatePump, onChocolatePumpChange }) {
-	return (
-		<>
-			<label htmlFor="chocolateSaucePumps">Chocolate Sauce Pumps:</label>
-			<select id="chocolateSaucePumps" value={chocolatePump} onChange={(e) => onChocolatePumpChange(e.target.value)}>
-				<option value="0"> 0 </option>
-				<option value="1"> 1 </option>
-				<option value="2"> 2 </option>
-				<option value="3"> 3 (+$0.50) </option>
-				<option value="4"> 4 (+$1.00) </option>
-				<option value="5"> 5 (+$1.50) </option>
-				<option value="6"> 6 (+$2.00) </option>
-			</select>
-		</>
-	);
-}	// close ChocolatePumpOption
-
-
+/*
+	The components to show the coffee price
+ */
 function OrderSummary({ price }) {
 	return (
 		<>
@@ -121,9 +73,19 @@ function OrderSummary({ price }) {
 
 
 /* Calcualte price */
+/*
+	Purpose: given attributes of a coffee order, calculate and return the price; 
+			- return null if coffee info is invalid (based on the constraints)
+	Parameter:
+		1. type: the type of coffee: {hot, cold, blended}
+		2. size: size of coffee: {s, m, l, xl}
+		3. whippedCreamTopping: true/false
+		4. chocolatePump: {0, 1, 2, 3, 4, 5, 6}
+ */
 function calculatePrice( type, size, whippedCreamTopping, chocolatePump ) {
-	const COFFEE = data.drink.coffee;		// data of coffee
-	const coffee = {};						// data for current coffee order
+	const COFFEE = data.drink.coffee;		// general information of coffee order(price table)
+	const coffee = {};						// information of current coffee order
+	// set the current coffee order info
 	coffee["type"] = {[type]: true};
 	coffee["size"] = {[size]: true};
 	coffee["whippedCreamTopping"] = {[whippedCreamTopping]: true};
@@ -132,20 +94,17 @@ function calculatePrice( type, size, whippedCreamTopping, chocolatePump ) {
 	const constraints = COFFEE.constraint;
 	var validate = true;
 	constraints.forEach(constraint => {
-		var operand1;
-		if (constraint[0] === 1)
-			operand1 = coffee[constraint[1]][constraint[2]];
-		else
-			operand1 = !coffee[constraint[1]][constraint[2]];
+		// for each constraint: imply corresponding expression to validate the coffee order
+		var operand1 = constraint[0] === 1? coffee[constraint[1]][constraint[2]] : !coffee[constraint[1]][constraint[2]];
 		var operand2 = constraint[3] === 1? coffee[constraint[4]][constraint[5]] : !coffee[constraint[4]][constraint[5]];
 		var expression = operand1 && operand2;
-		if (expression === true)
+		if (expression === true)		// the coffee info is invalid
 			validate = `${expression}: ${type} ${size} ${whippedCreamTopping} ${chocolatePump}`;
 	});
-	if (validate !== true)		// if the information is invalid
-		return null;
-
-	// calculate price
+	if (validate !== true)				// the coffee info is invalid
+		return null;					
+										// if the coffee info is valid
+	// calculate additional price 					
 	let additionalPrice = 0;
 	Object.keys(coffee).forEach((attri) => {
 		Object.keys(COFFEE[attri]).forEach((attriValue) => {
@@ -154,6 +113,7 @@ function calculatePrice( type, size, whippedCreamTopping, chocolatePump ) {
 		});
 	});
 
+	// add the base price
 	const price = COFFEE["basePrice"] + additionalPrice;
 	return price;
 }	// close calculatePrice

@@ -15,8 +15,8 @@
 				"xl": 1.5
 			},
 			"whippedCreamTopping": {
-				"yes": 0.5,
-				"no": 0
+				"true": 0.5,
+				"false": 0
 			},
 			"chocolatePump": {
 				"0": 0,
@@ -48,8 +48,8 @@
 				"xl": 1.5
 			},
 			"whippedCreamTopping": {
-				"yes": 0.5,
-				"no": 0
+				"true": 0.5,
+				"false": 0
 			},
 			"chocolatePump": {
 				"0": 0,
@@ -76,24 +76,24 @@
 			"showName": "Sandwich",
 			"basePrice": 3,
 			"egg": {
-				"yes": 1,
-				"no": 0
+				"true": 1,
+				"false": 0
 			},
 			"turkey": {
-				"yes": 1,
-				"no": 0
+				"true": 1,
+				"false": 0
 			}
 		},
 		"bagel": {
 			"showName": "Bagel",
 			"basePrice": 3,
 			"butter": {
-				"yes": 0.5,
-				"no": 0
+				"true": 0.5,
+				"false": 0
 			},
 			"creamCheeseTopping": {
-				"yes": 0.5,
-				"no": 0
+				"true": 0.5,
+				"false": 0
 			}
 		}
 	}

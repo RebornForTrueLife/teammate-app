@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Coffee Order</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1, h2, h3 {
+      color: #333;
+      text-align: center;
+    }
+
+    .container {
+      display: flex;
+      }
+    label {
+      font-weight: bold;
+    }
+
+    select, input[type="number"] {
+      width: 90%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .box {
+      flex: 1;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 20px;
+      margin-right: 20px;
+    }
+
+    .summary {
+      background-color: #f0f0f0;
+      padding: 10px;
+      margin-top: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+    h2 {
+      margin-top: 20px;}
+  </style>
+</head>
+<body>
+  <h1>Coffee Order</h1>
+
+  <div class="container">
+    <div class="box">
+      <h2>Coffee</h2>
+      <label for="coffeeType">Type:</label>
+      <select id="coffeeType">
+        <option value="hot">Hot</option>
+        <option value="cold">Cold</option>
+        <option value="blended">Blended (+$1)</option>
+      </select>
+      <br>
+
+      <label for="coffeeSize">Size:</label>
+      <select id="coffeeSize">
+        <option value="S">S</option>
+        <option value="M">M (+$0.5)</option>
+        <option value="L">L (+$1)</option>
+        <option value="XL">XL (+$1.5)</option>
+      </select>
+      <br>
+
+      <label for="coffeeWhippedCream">Whipped Cream Topping:</label>
+      <input type="checkbox" id="coffeeWhippedCream">
+      <br>
+      <br>
+      <label for="coffeeChocolateSauce">Chocolate Sauce Pumps:</label>
+      <input type="number" id="coffeeChocolateSauce" min="0" max="6">
+      <br>
+
+      <button onclick="addCoffee()">Add</button>
+    </div>
+
+    <div class="box">
+      <h2>Milk Tea</h2>
+      <label for="milkTeaType">Type:</label>
+      <select id="milkTeaType">
+        <option value="hot">Hot</option>
+        <option value="cold">Cold</option>
+        <option value="blended">Blended (+$1)</option>
+      </select>
+      <br>
+
+      <label for="milkTeaSize">Size:</label>
+      <select id="milkTeaSize">
+        <option value="S">S</option>
+        <option value="M">M (+$0.5)</option>
+        <option value="L">L (+$1)</option>
+        <option value="XL">XL (+$1.5)</option>
+      </select>
+      <br>
+
+      <label for="milkTeaWhippedCream">Whipped Cream Topping:</label>
+      <input type="checkbox" id="milkTeaWhippedCream">
+      <br>
+      <br>
+      <label for="milkTeaChocolateSauce">Chocolate Sauce Pumps:</label>
+      <input type="number" id="milkTeaChocolateSauce" min="0" max="6">
+      <br>
+
+      <label for="milkTeaMilk">Milk Option:</label>
+      <select id="milkTeaMilk">
+        <option value="wholeMilk">Whole Milk</option>
+        <option value="almondMilk">Almond Milk (+$0.5)</option>
+      </select>
+      <br>
+
+      <button onclick="addMilkTea()">Add</button>
+    </div>
+
+    <div class="box">
+      <h2>Sandwich</h2>
+      <label for="sandwichEgg">Egg:</label>
+      <input type="checkbox" id="sandwichEgg">
+  
+      <label for="sandwichTurkey">Turkey:</label>
+      <input type="checkbox" id="sandwichTurkey">
+      </select>
+      <br>
+      <br>
+    <button onclick="addBreakfast()">Add</button>
+    </div>
+    <div class="box">
+      <h2>Bagel</h2>
+      <label for="bagelButter">Butter:</label>
+      <input type="checkbox" id="bagelButter">
+      <label for="bagelCreamCheese">Cream Cheese:</label>
+      <input type="checkbox" id="bagelCreamCheese">
+      </select>
+      <br>
+      <br>
+      <button onclick="addBreakfast()">Add</button>
+    </div>
+
+    <div class="box">
+      <h2>Order Summary</h2>
+      <ul id="orderSummary"></ul>
+    </div>
+  </div>
+
+  <script>
+    // JavaScript code
+    var coffee = {
+      showName: "Coffee",
+      basePrice: 2,
+      type: {
+        hot: 0,
+        cold: 0,
+        blended: 1
+      },
+      size: {
+        S: 0,
+        M: 0.5,
+        L: 1,
+        XL: 1.5
+      },
+      whippedCreamTopping: {
+        yes: 0.5,
+        no: 0
+      },
+      chocolatePump: {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0.5,
+        "4": 1,
+        "5": 1.5,
+        "6": 2
+      },
+      constraint: [
+        [1, "type", "hot", 1, "size", "l"],
+        [1, "type", "hot", 1, "size", "xl"],
+        [-1, "type", "hot", -1, "chocolatePump", "0"]
+      ]
+    };
+
+    var milkTea = {
+      showName: "Milk Tea",
+      basePrice: 2.25,
+      type: {
+        hot: 0,
+        cold: 0,
+        blended: 1
+      },
+      size: {
+        S: 0,
+        M: 0.5,
+        L: 1,
+        XL: 1.5
+      },
+      whippedCreamTopping: {
+        yes: 0.5,
+        no: 0
+      },
+      chocolatePump: {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0.5,
+        "4": 1,
+        "5": 1.5,
+        "6": 2
+      },
+      milk: {
+        wholeMilk: 0,
+        almondMilk: 0.5
+      },
+      constraint: [
+        [1, "type", "hot", 1, "size", "l"],
+        [1, "type", "hot", 1, "size", "xl"],
+        [-1, "type", "hot", -1, "chocolatePump", "0"]
+      ]
+    };
+
+    var breakfast = {
+      sandwichEgg: 4,
+      sandwichTurkey: 4,
+      bagelButter: 3.5,
+      bagelCreamCheese: 3.5
+    };
+
+    var orderSummary = [];
+
+    function addCoffee() {
+      var coffeeType = document.getElementById("coffeeType").value;
+      var coffeeSize = document.getElementById("coffeeSize").value;
+      var whippedCream = document.getElementById("coffeeWhippedCream").checked;
+      var chocolateSauce = parseInt(document.getElementById("coffeeChocolateSauce").value);
+      var quantity = 1;
+
+      var totalPrice = coffee.basePrice +
+        coffee.type[coffeeType] +
+        coffee.size[coffeeSize] +
+        (whippedCream ? coffee.whippedCreamTopping.yes : coffee.whippedCreamTopping.no) +
+        coffee.chocolatePump[chocolateSauce];
+
+      addToOrderSummary(coffee.showName, coffeeType, coffeeSize, whippedCream, chocolateSauce, quantity, totalPrice);
+    }
+
+    function addMilkTea() {
+      var milkTeaType = document.getElementById("milkTeaType").value;
+      var milkTeaSize = document.getElementById("milkTeaSize").value;
+      var whippedCream = document.getElementById("milkTeaWhippedCream").checked;
+      var chocolateSauce = parseInt(document.getElementById("milkTeaChocolateSauce").value);
+      var milkOption = document.getElementById("milkTeaMilk").value;
+      var quantity = 1;
+
+      var totalPrice = milkTea.basePrice +
+        milkTea.type[milkTeaType] +
+        milkTea.size[milkTeaSize] +
+        (whippedCream ? milkTea.whippedCreamTopping.yes : milkTea.whippedCreamTopping.no) +
+        milkTea.chocolatePump[chocolateSauce] +
+        milkTea.milk[milkOption];
+
+      addToOrderSummary(milkTea.showName, milkTeaType, milkTeaSize, whippedCream, chocolateSauce, quantity, totalPrice);
+    }
+
+    function addBreakfast() {
+      var breakfastType = document.getElementById("breakfastType").value;
+      var quantity = 1;
+      var totalPrice = breakfast[breakfastType] * quantity;
+
+      addToOrderSummary(breakfastType, "", "", false, 0, quantity, totalPrice);
+    }
+
+    function addToOrderSummary(itemName, type, size, whippedCream, chocolateSauce, quantity, totalPrice) {
+      var summaryItem = document.createElement("li");
+      summaryItem.innerHTML =
+        "<strong>" + itemName + "</strong>" +
+        (type ? "<br>Type: " + type : "") +
+        (size ? "<br>Size: " + size : "") +
+        (whippedCream ? "<br>Whipped Cream Topping" : "") +
+        (chocolateSauce > 0 ? "<br>Chocolate Sauce Pumps: " + chocolateSauce : "") +
+        "<br>Quantity: " + quantity +
+        "<br>Total Price: $" + totalPrice.toFixed(2) +
+        '<button onclick="deleteItem(this)">x</button>';
+
+      document.getElementById("orderSummary").appendChild(summaryItem);
+
+      orderSummary.push({
+        itemName: itemName,
+        type: type,
+        size: size,
+        whippedCream: whippedCream,
+        chocolateSauce: chocolateSauce,
+        quantity: quantity,
+        totalPrice: totalPrice
+      });
+    }
+
+    function deleteItem(button) {
+      var listItem = button.parentNode;
+      listItem.parentNode.removeChild(listItem);
+
+      var index = Array.from(listItem.parentNode.children).indexOf(listItem);
+      orderSummary.splice(index, 1);
+    }
+  </script>
+</body>
+</html>
