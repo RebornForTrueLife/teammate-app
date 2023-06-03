@@ -20,7 +20,8 @@ export function TypeOption({ type, onTypeChange }) {
 	return (
 		<>
 			<label htmlFor="type">Drink Type:</label>
-			<select id="type" value={type} onChange={(event) => onTypeChange(event.target.value)}>
+			<br/>
+			<select value={type} onChange={(event) => onTypeChange(event.target.value)}>
 				<option value="hot">Hot</option>
 				<option value="cold">Cold</option>
 				<option value="blended">Blended</option>
@@ -37,7 +38,8 @@ export function SizeOption({ size, onSizeChange }) {
 	return (
 		<>
 			<label htmlFor="size">Size:</label>
-			<select id="size" value={size} onChange={(e) => onSizeChange(e.target.value)}>
+			<br/>
+			<select value={size} onChange={(e) => onSizeChange(e.target.value)}>
 				<option value="s">$2 - Small</option>
 				<option value="m">$2.5 - Medium (+$0.5)</option>
 				<option value="l">$3 - Large (+$1)</option>
@@ -74,6 +76,7 @@ export function ChocolatePumpOption({ chocolatePump, onChocolatePumpChange }) {
 	return (
 		<>
 			<label htmlFor="chocolateSaucePumps">Chocolate Sauce Pumps:</label>
+			<br/>
 			<input 
 				type="number"
 				min="0"

@@ -1,26 +1,23 @@
 
 /*
-	This is UI for coffee order
+	This is milk-tea inputting components
  */
 
 import { TypeOption, SizeOption, CreamOption, ChocolatePumpOption } from './drink-order';
 
 
 /*
-	Each coffee order information has 4 attributes: 
-		1. type
-		2. size
-		3. whippedCreamTopping
-		4. chocolatePump
-	This Components allow to input the attributes
-	Parameter:
-		1. Item: in this case, the coffee info = item.drink.coffee
-		2. onItemChange, the function to handle when the user inputting coffee info
+	- Milk-tea has below attributes:
+		1. Type
+		2. Size
+		3. Whipped Cream?
+		4. Chocolate sauce
+		5. milk
+	- Parameters:
+		1. item: represent the current milk-tea information. In this case to get actual data = item.drink.milkTea
+		2. onItemChange: the function to handle change of milk-tea info, push the data upto the parent component
  */
-export default function CoffeeOrder({ item, onItemChange }) {
-	
-	// const price = calculatePrice(type, size, whippedCreamTopping, chocolatePump);
-
+export default function MilkTeaOrder({ item, onItemChange }) {
 	return (
 		<>
 			<style
@@ -30,41 +27,57 @@ export default function CoffeeOrder({ item, onItemChange }) {
 				}}
 			/>
 			<div className="box">
-				<h2>Coffee</h2>
+				<h2>Milk Tea</h2>
 				<br/>
 
 				{/*This is type of drink*/}
-				<TypeOption type={item.drink.coffee.type} onTypeChange={(value) => {
-					item.drink.coffee.type = value;
+				<TypeOption type={item.drink.milkTea.type} onTypeChange={(value) => {
+					item.drink.milkTea.type = value;
 					onItemChange(item);
 				}} />
 				<br/>
 				
 				{/* Size field */}
-				<SizeOption size={item.drink.coffee.size} onSizeChange={(value) => {
-					item.drink.coffee.size = value;
+				<SizeOption size={item.drink.milkTea.size} onSizeChange={(value) => {
+					item.drink.milkTea.size = value;
 					onItemChange(item);
 				}} />
 				<br/>
 				
 				{/* whipped cream topping field */}
-				<CreamOption whippedCreamTopping={item.drink.coffee.whippedCreamTopping} onWhippedCreamToppingChange={(value) => {
-					item.drink.coffee.whippedCreamTopping = value;
+				<CreamOption whippedCreamTopping={item.drink.milkTea.whippedCreamTopping} onWhippedCreamToppingChange={(value) => {
+					item.drink.milkTea.whippedCreamTopping = value;
 					onItemChange(item);
 				}} />
 				<br/>
 				
 				{/* Chocolate pump */}
-				<ChocolatePumpOption chocolatePump={item.drink.coffee.chocolatePump} onChocolatePumpChange={(value) => {
-					item.drink.coffee.chocolatePump = value;
+				<ChocolatePumpOption chocolatePump={item.drink.milkTea.chocolatePump} onChocolatePumpChange={(value) => {
+					item.drink.milkTea.chocolatePump = value;
 					onItemChange(item);
 				}} />
 				<br/>
+
+				{/* Milk */}
+				<MilkOption milk={item.drink.milkTea.milk} onMilkChange={(value) => {
+					item.drink.milkTea.milk = value;
+					onItemChange(item);
+				}} />
 
 				{/* add to ordered-table button */}
 				<button>Add</button>
 			</div>
 		</>
 	);
-}	// close CoffeeOrder
+}	// close milkTea
 
+
+/* components for choosing kind of milk */
+function MilkOption({ milk, onMilkChange }) {
+	return (
+		<select value={milk} onChange={(event) => {onMilkChange(event.target.value)}} >
+			<option value="wholeMilk">Whole milk</option>
+			<option value="almondMilk">Almond milk</option>
+		</select>
+	);
+}	// close MilkOption
