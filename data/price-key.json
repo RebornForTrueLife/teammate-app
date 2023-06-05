@@ -1,0 +1,6 @@
+{
+	"coffee": ["type", "size", "whippedCreamTopping", "chocolatePump"],
+	"milkTea": ["type", "size", "whippedCreamTopping", "chocolatePump", "milk"],
+	"sandwich": ["egg", "turkey"],
+	"bagel": ["butter", "creamCheeseTopping"]
+}

@@ -8,15 +8,38 @@ import { useState } from 'react';
 import OrderedTable from './ordered-table';
 import CoffeeOrder from './coffee-order';
 import MilkTeaOrder from './milk-tea-order';
-import { calculatePrice } from './item-order';
+import SandwichOrder from './sandwich-order';
+import BagelOrder from './bagel-order';
+import calculatePrice, { validateItem, getActualItem } from './item-order';
 import data from '../../../data/item-data.json';
 
 
 /* Ordering menu */
 export default function Ordering() {
+	const [itemCoffee, setItemCoffee] = useState({drink: {coffee: {
+		type: "hot",
+		size: "s",
+		whippedCreamTopping: false,
+		chocolatePump: 0
+	}}});
+	
+	const [itemMilkTea, setItemMilkTea] = useState({drink: {milkTea: {
+		type: "hot",
+		size: "s",
+		whippedCreamTopping: false,
+		chocolatePump: 0,
+		milk: "wholeMilk"
+	}}});
 
-	const [itemCoffee, setItemCoffee] = useState({drink: {coffee: {}}});
-	const [itemMilkTea, setItemMilkTea] = useState({drink: {milkTea: {}}});
+	const [itemSandwich, setItemSandwich] = useState({food: {sandwich: {
+		egg: false,
+		turkey: false
+	}}});
+
+	const [itemBagel, setItemBagel] = useState({food: {bagel: {
+		butter: false,
+		creamCheeseTopping: false
+	}}});
 
 	return (
 		<>
@@ -30,9 +53,11 @@ export default function Ordering() {
 			<h1>Ordering</h1>
 			<br/>
 			<div className="container">
-				<CoffeeOrder item={itemCoffee} onItemChange={setItemCoffee} />
-				<MilkTeaOrder item={itemMilkTea} onItemChange={setItemMilkTea} />
-				<OrderedTable />
+				<CoffeeOrder data={data} item={itemCoffee} onItemChange={setItemCoffee} />
+				<MilkTeaOrder data={data} item={itemMilkTea} onItemChange={setItemMilkTea} />
+				<SandwichOrder data={data} item={itemSandwich} onItemChange={setItemSandwich} />
+				<BagelOrder data={data} item={itemBagel} onItemChange={setItemBagel} />
+				<OrderedTable item={itemCoffee} />
 			</div>
 		</>	
 	);

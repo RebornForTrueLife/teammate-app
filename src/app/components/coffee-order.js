@@ -4,6 +4,7 @@
  */
 
 import { TypeOption, SizeOption, CreamOption, ChocolatePumpOption } from './drink-order';
+import calculatePrice, { validateItem, getActualItem } from './item-order';
 
 
 /*
@@ -14,10 +15,11 @@ import { TypeOption, SizeOption, CreamOption, ChocolatePumpOption } from './drin
 		4. chocolatePump
 	This Components allow to input the attributes
 	Parameter:
+		0. data: metrics data to calcualtePrice, validate info...
 		1. Item: in this case, the coffee info = item.drink.coffee
 		2. onItemChange, the function to handle when the user inputting coffee info
  */
-export default function CoffeeOrder({ item, onItemChange }) {
+export default function CoffeeOrder({ data, item, onItemChange }) {
 	
 	// const price = calculatePrice(type, size, whippedCreamTopping, chocolatePump);
 
@@ -34,37 +36,58 @@ export default function CoffeeOrder({ item, onItemChange }) {
 				<br/>
 
 				{/*This is type of drink*/}
-				<TypeOption type={item.drink.coffee.type} onTypeChange={(value) => {
-					item.drink.coffee.type = value;
-					onItemChange(item);
+				<TypeOption id="coffee-type" 
+					itemName="coffee"
+					type={item.drink.coffee.type} 
+					onTypeChange={(value) => {
+						const newItem = JSON.parse(JSON.stringify(item));
+						newItem.drink.coffee.type = value;
+						onItemChange(newItem);
 				}} />
 				<br/>
 				
 				{/* Size field */}
-				<SizeOption size={item.drink.coffee.size} onSizeChange={(value) => {
-					item.drink.coffee.size = value;
-					onItemChange(item);
+				<SizeOption id="coffee-size" 
+					itemName="coffee"
+					size={item.drink.coffee.size} 
+					onSizeChange={(value) => {
+						const newItem = JSON.parse(JSON.stringify(item));
+						newItem.drink.coffee.size = value;
+						onItemChange(newItem);
 				}} />
 				<br/>
 				
 				{/* whipped cream topping field */}
-				<CreamOption whippedCreamTopping={item.drink.coffee.whippedCreamTopping} onWhippedCreamToppingChange={(value) => {
-					item.drink.coffee.whippedCreamTopping = value;
-					onItemChange(item);
+				<CreamOption id="coffee-whippedCreamTopping" 
+					itemName="coffee"
+					whippedCreamTopping={item.drink.coffee.whippedCreamTopping} 
+					onWhippedCreamToppingChange={(value) => {
+						const newItem = JSON.parse(JSON.stringify(item));
+						newItem.drink.coffee.whippedCreamTopping = value;
+						onItemChange(newItem);
 				}} />
 				<br/>
 				
 				{/* Chocolate pump */}
-				<ChocolatePumpOption chocolatePump={item.drink.coffee.chocolatePump} onChocolatePumpChange={(value) => {
-					item.drink.coffee.chocolatePump = value;
-					onItemChange(item);
+				<ChocolatePumpOption id="coffee-chocolate" 
+					itemName="coffee"
+					chocolatePump={item.drink.coffee.chocolatePump} 
+					onChocolatePumpChange={(value) => {
+						const newItem = JSON.parse(JSON.stringify(item));
+						newItem.drink.coffee.chocolatePump = value;
+						onItemChange(newItem);
 				}} />
 				<br/>
 
 				{/* add to ordered-table button */}
-				<button>Add</button>
+				<button onClick={() => calculatePrice(data, item)}>Add</button>
 			</div>
 		</>
 	);
 }	// close CoffeeOrder
+
+
+/*
+	initialize coffee input component
+ */
 

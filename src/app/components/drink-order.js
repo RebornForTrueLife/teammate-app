@@ -16,12 +16,12 @@
 
 	* Similar to 3 attributes *
  */
-export function TypeOption({ type, onTypeChange }) {
+export function TypeOption({ itemName, type, onTypeChange }) {
 	return (
 		<>
-			<label htmlFor="type">Drink Type:</label>
+			<label htmlFor={`${itemName}-type`}>Drink Type:</label>
 			<br/>
-			<select value={type} onChange={(event) => onTypeChange(event.target.value)}>
+			<select id={`${itemName}-type`} value={type} onChange={(event) => onTypeChange(event.target.value)}>
 				<option value="hot">Hot</option>
 				<option value="cold">Cold</option>
 				<option value="blended">Blended</option>
@@ -34,12 +34,12 @@ export function TypeOption({ type, onTypeChange }) {
 /*
 	Size input component
  */
-export function SizeOption({ size, onSizeChange }) {
+export function SizeOption({ itemName, size, onSizeChange }) {
 	return (
 		<>
-			<label htmlFor="size">Size:</label>
+			<label htmlFor={`${itemName}-size`}>Size:</label>
 			<br/>
-			<select value={size} onChange={(e) => onSizeChange(e.target.value)}>
+			<select id={`${itemName}-size`} value={size} onChange={(e) => onSizeChange(e.target.value)}>
 				<option value="s">$2 - Small</option>
 				<option value="m">$2.5 - Medium (+$0.5)</option>
 				<option value="l">$3 - Large (+$1)</option>
@@ -53,13 +53,13 @@ export function SizeOption({ size, onSizeChange }) {
 /*
 	whippedCreamTopping input component
  */
-export function CreamOption({ whippedCreamTopping, onWhippedCreamToppingChange }) {
-	// convert value of whippedCreamTopping (yes/no) into boolean for the checkbox
+export function CreamOption({ itemName, whippedCreamTopping, onWhippedCreamToppingChange }) {
 	return (
 		<>
-			<label htmlFor="whippedCream">Whipped Cream Topping:</label>
+			<label htmlFor={`${itemName}-whippedCreamTopping`}>Whipped Cream Topping:</label>
 			{' '}
 			<input 
+				id={`${itemName}-whippedCreamTopping`}
 				type="checkbox" 
 				checked={whippedCreamTopping} 
 				onChange={(e) => onWhippedCreamToppingChange(e.target.checked)} />
@@ -72,12 +72,13 @@ export function CreamOption({ whippedCreamTopping, onWhippedCreamToppingChange }
 /*
 	chocolatePump input component
  */
-export function ChocolatePumpOption({ chocolatePump, onChocolatePumpChange }) {
+export function ChocolatePumpOption({ itemName, chocolatePump, onChocolatePumpChange }) {
 	return (
 		<>
-			<label htmlFor="chocolateSaucePumps">Chocolate Sauce Pumps:</label>
+			<label htmlFor={`${itemName}-chocolatePump`}>Chocolate Sauce Pumps:</label>
 			<br/>
 			<input 
+				id={`${itemName}-chocolatePump`}
 				type="number"
 				min="0"
 				max="6"

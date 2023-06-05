@@ -4,6 +4,7 @@
  */
 
 import { TypeOption, SizeOption, CreamOption, ChocolatePumpOption } from './drink-order';
+import calculatePrice, { validateItem, getActualItem } from './item-order';
 
 
 /*
@@ -14,10 +15,12 @@ import { TypeOption, SizeOption, CreamOption, ChocolatePumpOption } from './drin
 		4. Chocolate sauce
 		5. milk
 	- Parameters:
+	Parameter:
+		0. data: metrics data to calcualtePrice, validate info...
 		1. item: represent the current milk-tea information. In this case to get actual data = item.drink.milkTea
 		2. onItemChange: the function to handle change of milk-tea info, push the data upto the parent component
  */
-export default function MilkTeaOrder({ item, onItemChange }) {
+export default function MilkTeaOrder({ data, item, onItemChange }) {
 	return (
 		<>
 			<style
@@ -31,41 +34,61 @@ export default function MilkTeaOrder({ item, onItemChange }) {
 				<br/>
 
 				{/*This is type of drink*/}
-				<TypeOption type={item.drink.milkTea.type} onTypeChange={(value) => {
-					item.drink.milkTea.type = value;
-					onItemChange(item);
+				<TypeOption 
+					itemName="milkTea"
+					type={item.drink.milkTea.type} 
+					onTypeChange={(value) => {
+						const newItem = JSON.parse(JSON.stringify(item));
+						newItem.drink.milkTea.type = value;
+						onItemChange(newItem);
 				}} />
 				<br/>
 				
 				{/* Size field */}
-				<SizeOption size={item.drink.milkTea.size} onSizeChange={(value) => {
-					item.drink.milkTea.size = value;
-					onItemChange(item);
+				<SizeOption 
+					itemName="milkTea"
+					size={item.drink.milkTea.size} 
+					onSizeChange={(value) => {
+						const newItem = JSON.parse(JSON.stringify(item));
+						newItem.drink.milkTea.size = value;
+						onItemChange(newItem);
 				}} />
 				<br/>
 				
 				{/* whipped cream topping field */}
-				<CreamOption whippedCreamTopping={item.drink.milkTea.whippedCreamTopping} onWhippedCreamToppingChange={(value) => {
-					item.drink.milkTea.whippedCreamTopping = value;
-					onItemChange(item);
+				<CreamOption 
+					itemName="milkTea"
+					whippedCreamTopping={item.drink.milkTea.whippedCreamTopping} 
+					onWhippedCreamToppingChange={(value) => {
+						const newItem = JSON.parse(JSON.stringify(item));
+						newItem.drink.milkTea.whippedCreamTopping = value;
+						onItemChange(newItem);
 				}} />
 				<br/>
 				
 				{/* Chocolate pump */}
-				<ChocolatePumpOption chocolatePump={item.drink.milkTea.chocolatePump} onChocolatePumpChange={(value) => {
-					item.drink.milkTea.chocolatePump = value;
-					onItemChange(item);
+				<ChocolatePumpOption 
+					itemName="milkTea"
+					chocolatePump={item.drink.milkTea.chocolatePump} 
+					onChocolatePumpChange={(value) => {
+						const newItem = JSON.parse(JSON.stringify(item));
+						newItem.drink.milkTea.chocolatePump = value;
+						onItemChange(newItem);
 				}} />
 				<br/>
 
 				{/* Milk */}
-				<MilkOption milk={item.drink.milkTea.milk} onMilkChange={(value) => {
-					item.drink.milkTea.milk = value;
-					onItemChange(item);
+				<MilkOption 
+					itemName="milkTea"
+					milk={item.drink.milkTea.milk} 
+					onMilkChange={(value) => {
+						const newItem = JSON.parse(JSON.stringify(item));
+						newItem.drink.milkTea.milk = value;
+						onItemChange(newItem);
 				}} />
 
 				{/* add to ordered-table button */}
-				<button>Add</button>
+				<button onClick={() => calculatePrice(data, item)}>Add</button>
 			</div>
 		</>
 	);
@@ -73,11 +96,14 @@ export default function MilkTeaOrder({ item, onItemChange }) {
 
 
 /* components for choosing kind of milk */
-function MilkOption({ milk, onMilkChange }) {
+function MilkOption({ itemName, milk, onMilkChange }) {
 	return (
-		<select value={milk} onChange={(event) => {onMilkChange(event.target.value)}} >
-			<option value="wholeMilk">Whole milk</option>
-			<option value="almondMilk">Almond milk</option>
-		</select>
+		<>
+			<label htmlFor={`${itemName}-milk`}></label>
+			<select id={`${itemName}-milk`} value={milk} onChange={(event) => {onMilkChange(event.target.value)}} >
+				<option value="wholeMilk">Whole milk</option>
+				<option value="almondMilk">Almond milk</option>
+			</select>
+		</>
 	);
 }	// close MilkOption
