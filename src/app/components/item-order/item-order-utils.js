@@ -1,22 +1,18 @@
-/* Calcualte price */
-/*
-	Purpose: given attributes of a coffee order, calculate and return the price; 
-			- return null if coffee info is invalid (based on the constraints)
-	Parameter:
-		1. type: the type of coffee: {hot, cold, blended}
-		2. size: size of coffee: {s, m, l, xl}
-		3. whippedCreamTopping: true/false
-		4. chocolatePump: {0, 1, 2, 3, 4, 5, 6}
+/* Calcualte price 
+	This utilities of item-order, provide below services:
+		1. validateItem: validating if an item is valid or not
+		2. calculatePrice: calculate price of item based on a map(value, price) in database
  */
 
-import priceKey from '../../../data/price-key.json';
+import priceKey from '/data/price-key.json';
 
 
 /*
 	Calculate price based on the info of item, given the price metrics
 	Parameters:
 		1. data: price metrics
-		2. item: current item info
+		2. item: an object, modelized by this struture: item.[kind].[name].[attribute]
+			Eg: an coffee item is: item.drink.coffee
 	Return:
 		- price of the input item
 	*Note: this function does NOT take respondsible for validate item info*
@@ -24,8 +20,6 @@ import priceKey from '../../../data/price-key.json';
 export default function calculatePrice( data, item ) {
 	// itemKind: drink or food...
 	// itemName: coffee, sandwich...
-	if (validateItem(data, item) !== true)
-		return NaN;
 	const [itemKind, itemName] = getActualItem(data, item);
 	var price = data[itemKind][itemName]["basePrice"];
 	priceKey[itemName].forEach((key) => {						// key: type or size,...
@@ -34,13 +28,14 @@ export default function calculatePrice( data, item ) {
 				price += data[itemKind][itemName][key][value];	// add corresponding price for the value base on price metrics
 		});
 	});
-	alert(`Price = ${price}`);
 	return price;
 }	// close calculatePrice
 
 
 /* 
-	- To validate a drink
+	- To validate a item based on 2 conditions:
+		1. The item is in the database
+		2. If the item-name has constraint in database, it must satisfy all constraint
 	- Return true if the drink is valid, otherwise return message reporting wrong constraint
  */
 export function validateItem( data, item ) {
@@ -65,9 +60,6 @@ export function validateItem( data, item ) {
 			validate = `${constraint}`;
 		}	// close if
 	});
-	// notify user about invalid item
-	if (validate !== true)
-		alert(`Invalid info, due to constraint: ${validate}`);
 	return validate;
 }	// close validateItem
 
@@ -81,7 +73,7 @@ export function validateItem( data, item ) {
 		eg: if item is a coffee then, the result is: [drink, coffee]
 
  */
-export function getActualItem( data, item ) {
+function getActualItem( data, item ) {
 	var kind = null;
 	var name = null;
 	Object.keys(data).forEach((itemKind) => {

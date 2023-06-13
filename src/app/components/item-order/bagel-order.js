@@ -1,5 +1,6 @@
 
-import calculatePrice, { validateItem, getActualItem } from './item-order';
+import calculatePrice, { validateItem, getActualItem } from './item-order-utils';
+import AddButton from './add-button';
 
 
 /*
@@ -9,7 +10,7 @@ import calculatePrice, { validateItem, getActualItem } from './item-order';
 		1. Item: in this case, the bagel info = item.food.bagel
 		2. onItemChange, the function to handle when the user inputting bagel info
  */
-export default function BagelOrder({ data, item, onItemChange }) {
+export default function BagelOrder({ data, item, onItemChange, listItem, onListItemChange }) {
 	return (
 		<div className="box">
 			<h2>Bagel</h2>
@@ -37,7 +38,7 @@ export default function BagelOrder({ data, item, onItemChange }) {
 			<br/>
 			<br/>
 			
-			<button onClick={() => calculatePrice(data, item)}>Add</button>
+			<AddButton data={data} item={item} listItem={listItem} onListItemChange={onListItemChange} />				
 		</div>
 	);
 }	// close BagelOrder
@@ -75,3 +76,13 @@ function CreamCheeseToppingOption({ creamCheeseTopping, onCreamCheeseToppingChan
 		</>
 	);
 }	// close CreamCheeseToppingOption
+
+
+// return the initial value of a bagel order
+export function initializeBagel() {
+	const bagel = {food: {bagel: {
+		butter: false,
+		creamCheeseTopping: false
+	}}};
+	return bagel;
+}	// close initializeBagel

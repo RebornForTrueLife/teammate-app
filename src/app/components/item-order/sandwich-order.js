@@ -1,5 +1,6 @@
 
-import calculatePrice, { validateItem, getActualItem } from './item-order';
+import calculatePrice, { validateItem, getActualItem } from './item-order-utils';
+import AddButton from './add-button';
 
 
 /*
@@ -12,7 +13,7 @@ import calculatePrice, { validateItem, getActualItem } from './item-order';
 		1. Item: in this case, the sandwich info = item.food.sandwich
 		2. onItemChange, the function to handle when the user inputting sandwich info
  */
-export default function SandwichOrder({ data, item, onItemChange }) {
+export default function SandwichOrder({ data, item, onItemChange, listItem, onListItemChange}) {
 	return (
 		<div className="box">
 			<h2>Sandwich</h2>
@@ -41,7 +42,7 @@ export default function SandwichOrder({ data, item, onItemChange }) {
 			<br/>			
 			<br/>
 
-			<button onClick={() => calculatePrice(data, item)}>Add</button>
+			<AddButton data={data} item={item} listItem={listItem} onListItemChange={onListItemChange} />				
 		</div>
 	);
 }	// close SandwichOrder
@@ -79,3 +80,13 @@ function TurkeyOption({ turkey, onTurkeyChange }) {
 		</>
 	);
 }	// close TurkeyOption
+
+
+// return the initial value of a sandwich order
+export function initializeSandwich() {
+	const sandwich = {food: {sandwich: {
+		egg: false,
+		turkey: false
+	}}};
+	return sandwich;
+}	// close initializeSandwich

@@ -3,8 +3,9 @@
 	This is milk-tea inputting components
  */
 
-import { TypeOption, SizeOption, CreamOption, ChocolatePumpOption } from './drink-order';
-import calculatePrice, { validateItem, getActualItem } from './item-order';
+import { TypeOption, SizeOption, CreamOption, ChocolatePumpOption } from './drink-order-utils';
+import calculatePrice, { validateItem, getActualItem } from './item-order-utils';
+import AddButton from './add-button';
 
 
 /*
@@ -20,7 +21,7 @@ import calculatePrice, { validateItem, getActualItem } from './item-order';
 		1. item: represent the current milk-tea information. In this case to get actual data = item.drink.milkTea
 		2. onItemChange: the function to handle change of milk-tea info, push the data upto the parent component
  */
-export default function MilkTeaOrder({ data, item, onItemChange }) {
+export default function MilkTeaOrder({ data, item, onItemChange, listItem, onListItemChange}) {
 	return (
 		<>
 			<style
@@ -88,7 +89,7 @@ export default function MilkTeaOrder({ data, item, onItemChange }) {
 				}} />
 
 				{/* add to ordered-table button */}
-				<button onClick={() => calculatePrice(data, item)}>Add</button>
+				<AddButton data={data} item={item} listItem={listItem} onListItemChange={onListItemChange} />				
 			</div>
 		</>
 	);
@@ -107,3 +108,16 @@ function MilkOption({ itemName, milk, onMilkChange }) {
 		</>
 	);
 }	// close MilkOption
+
+
+// return initialize milkTea info of input ui
+export function initializeMilkTea() {
+	const milkTea = {drink: {milkTea: {
+		type: "hot",
+		size: "s",
+		whippedCreamTopping: false,
+		chocolatePump: 0,
+		milk: "wholeMilk"
+	}}};
+	return milkTea;
+}	// close initializeMilkTea

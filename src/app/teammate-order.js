@@ -3,8 +3,6 @@
 	This is order page for 4 items: coffee, milk-tea, sandwich, bagel
  */
 
-import CoffeeOrder from './components/coffee-order';
-
 
 export default function Order() {
 	return (

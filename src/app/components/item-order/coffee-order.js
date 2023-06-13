@@ -3,8 +3,9 @@
 	This is UI for coffee order
  */
 
-import { TypeOption, SizeOption, CreamOption, ChocolatePumpOption } from './drink-order';
-import calculatePrice, { validateItem, getActualItem } from './item-order';
+import { TypeOption, SizeOption, CreamOption, ChocolatePumpOption } from './drink-order-utils';
+import calculatePrice, { validateItem, getActualItem } from './item-order-utils';
+import AddButton from './add-button';
 
 
 /*
@@ -19,7 +20,7 @@ import calculatePrice, { validateItem, getActualItem } from './item-order';
 		1. Item: in this case, the coffee info = item.drink.coffee
 		2. onItemChange, the function to handle when the user inputting coffee info
  */
-export default function CoffeeOrder({ data, item, onItemChange }) {
+export default function CoffeeOrder({ data, item, onItemChange, listItem, onListItemChange}) {
 	
 	// const price = calculatePrice(type, size, whippedCreamTopping, chocolatePump);
 
@@ -80,7 +81,7 @@ export default function CoffeeOrder({ data, item, onItemChange }) {
 				<br/>
 
 				{/* add to ordered-table button */}
-				<button onClick={() => calculatePrice(data, item)}>Add</button>
+				<AddButton data={data} item={item} listItem={listItem} onListItemChange={onListItemChange} />
 			</div>
 		</>
 	);
@@ -90,4 +91,12 @@ export default function CoffeeOrder({ data, item, onItemChange }) {
 /*
 	initialize coffee input component
  */
-
+export function initializeCoffee() {
+	const coffee = {drink: {coffee: {
+		type: "hot",
+		size: "s",
+		whippedCreamTopping: false,
+		chocolatePump: 0
+	}}};
+	return coffee;
+}	// close initializeCoffee

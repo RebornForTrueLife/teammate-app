@@ -5,41 +5,26 @@
 
 "use client"							// in order to use the state
 import { useState } from 'react';
-import OrderedTable from './ordered-table';
-import CoffeeOrder from './coffee-order';
-import MilkTeaOrder from './milk-tea-order';
-import SandwichOrder from './sandwich-order';
-import BagelOrder from './bagel-order';
-import calculatePrice, { validateItem, getActualItem } from './item-order';
-import data from '../../../data/item-data.json';
+import OrderedTable from './ordered-table/ordered-table';
+import CoffeeOrder, { initializeCoffee } from './item-order/coffee-order';
+import MilkTeaOrder, { initializeMilkTea } from './item-order/milk-tea-order';
+import SandwichOrder, { initializeSandwich } from './item-order/sandwich-order';
+import BagelOrder, { initializeBagel } from './item-order/bagel-order';
+import calculatePrice, { validateItem, getActualItem } from './item-order/item-order-utils';
+import data from '/data/item-data.json';
 
 
 /* Ordering menu */
 export default function Ordering() {
-	const [itemCoffee, setItemCoffee] = useState({drink: {coffee: {
-		type: "hot",
-		size: "s",
-		whippedCreamTopping: false,
-		chocolatePump: 0
-	}}});
+	const [itemCoffee, setItemCoffee] = useState(initializeCoffee());
 	
-	const [itemMilkTea, setItemMilkTea] = useState({drink: {milkTea: {
-		type: "hot",
-		size: "s",
-		whippedCreamTopping: false,
-		chocolatePump: 0,
-		milk: "wholeMilk"
-	}}});
+	const [itemMilkTea, setItemMilkTea] = useState(initializeMilkTea());
 
-	const [itemSandwich, setItemSandwich] = useState({food: {sandwich: {
-		egg: false,
-		turkey: false
-	}}});
+	const [itemSandwich, setItemSandwich] = useState(initializeSandwich());
 
-	const [itemBagel, setItemBagel] = useState({food: {bagel: {
-		butter: false,
-		creamCheeseTopping: false
-	}}});
+	const [itemBagel, setItemBagel] = useState(initializeBagel());
+
+	const [listItem, setListItem] = useState([]);		// list of ordered items
 
 	return (
 		<>
@@ -53,11 +38,11 @@ export default function Ordering() {
 			<h1>Ordering</h1>
 			<br/>
 			<div className="container">
-				<CoffeeOrder data={data} item={itemCoffee} onItemChange={setItemCoffee} />
-				<MilkTeaOrder data={data} item={itemMilkTea} onItemChange={setItemMilkTea} />
-				<SandwichOrder data={data} item={itemSandwich} onItemChange={setItemSandwich} />
-				<BagelOrder data={data} item={itemBagel} onItemChange={setItemBagel} />
-				<OrderedTable item={itemCoffee} />
+				<CoffeeOrder data={data} item={itemCoffee} onItemChange={setItemCoffee} listItem={listItem} onListItemChange={setListItem} />
+				<MilkTeaOrder data={data} item={itemMilkTea} onItemChange={setItemMilkTea} listItem={listItem} onListItemChange={setListItem} />
+				<SandwichOrder data={data} item={itemSandwich} onItemChange={setItemSandwich} listItem={listItem} onListItemChange={setListItem} />
+				<BagelOrder data={data} item={itemBagel} onItemChange={setItemBagel} listItem={listItem} onListItemChange={setListItem} />
+				<OrderedTable listItem={listItem} />
 			</div>
 		</>	
 	);

@@ -1,0 +1,14 @@
+
+/* This is Cascading Style Sheets for ordering component */
+
+.itemBar {
+	overflow: auto;
+	resize: horizontal;
+}
+
+.orderedTable {
+	display: list-item;
+	flex: 1;
+	background-color: #fff;
+	border: 1px solid #ddd;
+}
