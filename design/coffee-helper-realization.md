@@ -19,7 +19,7 @@ To help the coffee shop to manage the ordering of their customer
 
 	- Purpose: supply cashiers an UI so that they can graphically select item info and calculate the price of item and the UI work in both computer and mobile devices
 
-	![place-order-ui](./images/place-order.pdf)
+	![place-order-ui](./images/select-item-ui.png)
 
 	1. Feature 1: Place multiple item into an order
 		- Purpose: due to the fact that: an order may contain many item -> this allow cashier can calculate total order at once.
@@ -62,9 +62,9 @@ To help the coffee shop to manage the ordering of their customer
 	1. Feature 1: Manage account 
 		- Purpose: allow to manage accounts and provide corresponding features for specific user
 
-		![login-register](./images/login-register.pdf)
+		![login-register](./images/register-login.png)
 
-		![update-profile](./images/update-profile.pdf)
+		![update-profile](./images/update-profile.png)
 
 		- Use cases:
 			1. For all users: they can register, login, and manage their profile
@@ -76,7 +76,7 @@ To help the coffee shop to manage the ordering of their customer
 	2. Feature 2: account for customer
 		- Purpose: provide for customer specific functions
 
-		![customer-ui](./images/customer-ui.pdf)
+		![customer-ui](./images/customer-ui.png)
 
 		1. Feature 2-1: place order
 			- Purpose: Allow the customer can place order themselves 
@@ -93,7 +93,7 @@ To help the coffee shop to manage the ordering of their customer
 		3. Feature 2-3: user can give comment and rate any past order
 			- Purpose: user can express their feeling about the services and manager can analyze customer desire to server bettter services
 
-			![past-order](./images/customer-past-order.pdf)
+			![past-order](./images/view-past-order.png)
 
 			- Use cases:
 				1. After having servered, customer can view the past order, rate and comment for that order
@@ -104,7 +104,7 @@ To help the coffee shop to manage the ordering of their customer
 
 			- Purpose: to allow authorized user can analyze the customer desire and provide better services
 
-			![list-comments](./images/comment-list.pdf)
+			![list-comments](./images/view-list-comments.png)
 
 			- Use case:
 				1. Manager can list all rating-comment and respond to chosen comment
