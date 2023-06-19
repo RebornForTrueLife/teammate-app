@@ -28,9 +28,9 @@
 				"6": 2
 			},
 			"constraint": [
-				[1, "type", "hot", 1, "size", "l"],
-				[1, "type", "hot", 1, "size", "xl"],
-				[-1, "type", "hot", -1, "chocolatePump", "0"]
+				[1, "type", "hot", 1, "size", "l", "A hot drink only has size S or M!"],
+				[1, "type", "hot", 1, "size", "xl", "A hot drink only has size S or M!"],
+				[-1, "type", "hot", -1, "chocolatePump", "0", "Only hot drink can be added chocolate sauce!"]
 			]
 		},
 		"milkTea": {
@@ -65,9 +65,9 @@
 				"almondMilk": 0.5
 			},
 			"constraint": [
-				[1, "type", "hot", 1, "size", "l"],
-				[1, "type", "hot", 1, "size", "xl"],
-				[-1, "type", "hot", -1, "chocolatePump", "0"]
+				[1, "type", "hot", 1, "size", "l", "A hot drink only has size S or M!"],
+				[1, "type", "hot", 1, "size", "xl", "A hot drink only has size S or M!"],
+				[-1, "type", "hot", -1, "chocolatePump", "0", "Only hot drink can be added chocolate sauce!"]
 			]
 		}
 	},

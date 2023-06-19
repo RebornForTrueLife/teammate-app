@@ -1,4 +1,8 @@
 
+**Note: keep 2 principles in mind: 
+	1 - One thing do 1 thing
+	2 - Open-closed**
+
 # Cashier UI for inputting item info
 
 
@@ -44,6 +48,7 @@ OrderedTable
 - prop: array of item
 ItemBar
 - prop: item
+
 *Each item has different display: 
 (1) can use item class and extends
 (2) use printer file - let it take care this things*

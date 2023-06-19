@@ -57,7 +57,7 @@ export function validateItem( data, item ) {
 		var operand2 = constraint[3] === 1?  operand21: !operand21;
 		var expression = operand1 && operand2;
 		if (expression === true) {		// the drink info is invalid
-			validate = `${constraint}`;
+			validate = `${constraint[6]}`;
 		}	// close if
 	});
 	return validate;
