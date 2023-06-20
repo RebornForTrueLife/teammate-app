@@ -90,3 +90,18 @@ function getActualItem( data, item ) {
 	// console.log(`${kind} - ${name}`);
 	return [kind, name];
 }	// close getActualItem
+
+
+/*
+	A Factory to create an Item given the item-name
+	Purpose:
+		- to make sure every created Item follow the same creating procedures (Builder)
+		and be able to add specific properties of specific item
+ */
+const ItemFactory = function() {
+	this.createItem = function( itemName ) {
+		// searching kind of item in database
+		var item;		
+		return item;
+	}	// close createItem
+}	// close ItemFactory
